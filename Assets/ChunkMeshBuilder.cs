@@ -31,7 +31,7 @@ public static class ChunkMeshBuilder {
 
 					bool isWater = false;
 
-					if (faces [0] == 6 && faces [1] == 7) {
+					if (faces.Count == 2 && faces [0] == 6 && faces [1] == 7) {
 						// This is a water block; move it to a separate mesh
 						isWater = true;
 					}
@@ -210,7 +210,7 @@ public static class ChunkMeshBuilder {
 
 								waterTris.Add (si + 2);
 								waterTris.Add (si + 3);
-								tris.Add (si + 1);
+								waterTris.Add (si + 1);
 								break;
 							}
 						}
@@ -224,7 +224,11 @@ public static class ChunkMeshBuilder {
 			}
 		}
 
-		return new ChunkMeshObject (verts, tris, uvs, colliderPositions);
+		if (waterVerts.Count == 0) {
+			return new ChunkMeshObject (verts, tris, uvs, colliderPositions);
+		} else {
+			return new ChunkMeshObject (verts, tris, uvs, colliderPositions, waterVerts, waterTris, waterUvs);
+		}
 	}
 }
 

@@ -5,13 +5,52 @@ using UnityEngine;
 
 public class CoroutineObject : MonoBehaviour {
 
-	static float timeout = 1f;
+	static int maxNumRunning = 5;
+	static float timeout = 2f;
+
+	public bool isRunning = false;
+
+	void Awake () {
+		this.gameObject.tag = "CoroutineObject";
+	}
 
 	public void BuildMesh (Chunk c, Chunk.renderChunkDelegate callback) {
 		StartCoroutine (buildMesh (c, callback));
 	}
 
 	IEnumerator buildMesh (Chunk c, Chunk.renderChunkDelegate callback) {
+
+		/*
+		#region CoroutineObject No Stacking
+		List<CoroutineObject> others = new List<CoroutineObject> (0);
+		foreach (GameObject g in GameObject.FindGameObjectsWithTag("CoroutineObject")) {
+			if (g != this.gameObject) {
+				others.Add(g.GetComponent<CoroutineObject>());
+			}
+		}
+		bool needsToWait = true;
+		while(needsToWait) {
+			int numRunning = 0;
+			foreach(CoroutineObject co in others) {
+				if(co.isRunning) {
+					numRunning++;
+				}
+			}
+
+			if(numRunning > maxNumRunning) {
+				needsToWait = true;
+			} else {
+				needsToWait = false;
+			}
+
+			if(needsToWait) {
+				yield return null;
+			}
+		}
+		#endregion
+		*/
+
+		isRunning = true;
 
 		float time = 0.0f;
 
@@ -31,7 +70,7 @@ public class CoroutineObject : MonoBehaviour {
 		if (time >= timeout) {
 			BuildMesh (c, callback);
 			thread.Abort ();
-			//print ("Retrying...");
+			print ("CoroutineObject timed out building mesh. Retrying...");
 			yield break;
 		}
 		callback.Invoke (cmo);
@@ -43,6 +82,8 @@ public class CoroutineObject : MonoBehaviour {
 	}
 
 	IEnumerator addColliders (Chunk c, GameObject g, List<Vector3> centres) {
+		isRunning = true;
+
 		GameObject col = new GameObject("Colliders");
 		col.transform.parent = g.transform;
 

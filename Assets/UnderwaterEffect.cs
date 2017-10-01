@@ -12,7 +12,7 @@ public class UnderwaterEffect : MonoBehaviour {
 	public World world;
 
 	void Update () {
-		if (world.PositionToVoxel (target.position) != null && world.PositionToVoxel (target.position).blockID == 9) {
+		if (target.position.y >= 0 && world.PositionToVoxel (target.position) != null && world.PositionToVoxel (target.position).blockID == 9) {
 			// Water height check (because water isn't at the top of the block)
 			if (target.position.y <= WorldGen.seaLevel + ChunkMeshBuilder.wh) {
 				ppb.profile = underwater;

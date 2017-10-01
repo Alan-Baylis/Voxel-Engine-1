@@ -6,6 +6,7 @@ public class LoadSurroundingChunks : MonoBehaviour {
 
 	public World world;
 	public int radius;
+	public int collisionRadius;
 
 	void Update () {
 		Chunk current = world.PositionToChunk (transform.position);

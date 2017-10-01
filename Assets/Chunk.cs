@@ -6,7 +6,7 @@ using UnityEngine;
 public class Chunk {
 
 	public static int width = 16;
-	public static int height = 100;
+	public static int height = 128;
 
 	static int numTrees = 3;
 	static int leafRadius = 2;
@@ -25,6 +25,8 @@ public class Chunk {
 	public volatile bool isInitialised = false;
 
 	public World world;
+
+	public ChunkMeshObject cmo = null;
 
 	int x, z;
 
@@ -116,8 +118,10 @@ public class Chunk {
 		go.GetComponent<MeshRenderer> ().material = world.chunkMaterial;
 	}
 
-	void ApplyMeshObject (ChunkMeshObject cmo) {
-		
+	void ApplyMeshObject (ChunkMeshObject _cmo) {
+
+		cmo = _cmo;
+
 		MonoBehaviour.Destroy (go);
 		go = new GameObject ("Chunk");
 		go.transform.position = new Vector3 (posX * Chunk.width, 0f, posZ * Chunk.width);
@@ -132,12 +136,14 @@ public class Chunk {
 		go.AddComponent<MeshFilter>().mesh = m;
 		go.AddComponent<MeshRenderer>();
 
-		//new GameObject ("Coroutine Object").AddComponent<CoroutineObject> ().AddColliders (this, go, cmo.colliderPositions);
+		AddColliders ();
 
+		/*
 		GameObject col = new GameObject("Collider");
 		col.transform.parent = go.transform;
 		col.transform.localPosition = Vector3.zero;
 		col.AddComponent<MeshCollider> ().sharedMesh = m;
+		*/
 
 		/*
 		GameObject col = new GameObject("Colliders");
@@ -147,6 +153,18 @@ public class Chunk {
 			col.AddComponent<BoxCollider> ().center = cmo.colliderPositions [i] + (Vector3.one * 0.5f) + new Vector3 (posX * Chunk.width, 0f, posZ * Chunk.width);
 		}
 		*/
+	}
+
+	public void AddColliders () {
+		if (cmo != null) {
+			new GameObject ("Coroutine Object").AddComponent<CoroutineObject> ().AddColliders (this, go, cmo.colliderPositions);
+		}
+	}
+
+	public void RemoveColliders () {
+		if (go.transform.Find ("Colliders") != null) {
+			MonoBehaviour.Destroy (go.transform.Find ("Colliders").gameObject);
+		}
 	}
 
 	public int posX {

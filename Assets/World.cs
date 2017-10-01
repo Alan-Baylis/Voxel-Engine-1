@@ -18,7 +18,7 @@ public class World : MonoBehaviour {
 	}
 
 	void Start () {
-		LoadChunk (0, 0);
+		//LoadChunk (0, 0);
 		/*
 		LoadChunk (-1, 0);
 		LoadChunk (0, -1);
@@ -126,5 +126,17 @@ public class World : MonoBehaviour {
 
 	public void SetVoxel (int x, int y, int z, short id) {
 		PositionToVoxel (new Vector3 (x, y, z)).Set (id);
+	}
+
+	public void LoadChunkColliders (int x, int z) {
+		if (chunks.ContainsKey (new Vector2 (x, z))) {
+			chunks [new Vector2 (x, z)].AddColliders ();
+		}
+	}
+
+	public void UnloadChunkColliders (int x, int z) {
+		if (chunks.ContainsKey (new Vector2 (x, z))) {
+			chunks [new Vector2 (x, z)].RemoveColliders ();
+		}
 	}
 }
