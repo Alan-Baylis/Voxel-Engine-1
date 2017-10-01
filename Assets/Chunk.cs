@@ -116,6 +116,9 @@ public class Chunk {
 	void doneRendering (ChunkMeshObject cmo) {
 		ApplyMeshObject (cmo);
 		go.GetComponent<MeshRenderer> ().material = world.chunkMaterial;
+		if (go.transform.Find ("ChunkWater") != null) {
+			go.transform.Find ("ChunkWater").GetComponent<MeshRenderer> ().material = world.waterMaterial;
+		}
 	}
 
 	void ApplyMeshObject (ChunkMeshObject _cmo) {
@@ -135,6 +138,20 @@ public class Chunk {
 
 		go.AddComponent<MeshFilter>().mesh = m;
 		go.AddComponent<MeshRenderer>();
+
+		if (cmo.hasWater) {
+			Mesh n = new Mesh ();
+			n.vertices = cmo.waterVerts.ToArray ();
+			n.triangles = cmo.waterTris.ToArray ();
+			n.uv = cmo.waterUvs.ToArray ();
+			n.RecalculateBounds ();
+			n.RecalculateNormals ();
+			GameObject g = new GameObject ("ChunkWater");
+			g.transform.parent = go.transform;
+			g.transform.localPosition = Vector3.zero;
+			g.AddComponent<MeshFilter> ().mesh = n;
+			g.AddComponent<MeshRenderer> ();
+		}
 
 		AddColliders ();
 
@@ -157,12 +174,15 @@ public class Chunk {
 
 	public void AddColliders () {
 		if (cmo != null) {
-			new GameObject ("Coroutine Object").AddComponent<CoroutineObject> ().AddColliders (this, go, cmo.colliderPositions);
+			// Don't add colliders if they already exist!
+			if (go.transform.Find ("Colliders") == null) {
+				new GameObject ("Coroutine Object").AddComponent<CoroutineObject> ().AddColliders (this, go, cmo.colliderPositions);
+			}
 		}
 	}
 
 	public void RemoveColliders () {
-		if (go.transform.Find ("Colliders") != null) {
+		if (go != null && go.transform.Find ("Colliders") != null) {
 			MonoBehaviour.Destroy (go.transform.Find ("Colliders").gameObject);
 		}
 	}

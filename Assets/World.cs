@@ -8,6 +8,7 @@ public class World : MonoBehaviour {
 	Dictionary<Vector2, Chunk> chunks = new Dictionary<Vector2, Chunk> ();
 
 	public Material chunkMaterial;
+	public Material waterMaterial;
 
 	public float seed = -1f;
 

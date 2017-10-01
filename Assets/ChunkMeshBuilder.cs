@@ -49,6 +49,7 @@ public static class ChunkMeshBuilder {
 						#region NEW IMPLEMENTATION
 						for (int l = 0; l < faces.Count; l++) {
 							int si = verts.Count; // Start index;
+							int wsi = waterVerts.Count; // Water start index
 							switch (faces [l]) {
 							case 0:
 								// Bottom
@@ -184,13 +185,13 @@ public static class ChunkMeshBuilder {
 								waterUvs.Add (new Vector2 (a.UV_BL.x + oneNth - mx, a.UV_BL.y + oneNth - mx));
 								waterUvs.Add (new Vector2 (a.UV_BL.x + mx, a.UV_BL.y + oneNth - mx));
 
-								waterTris.Add (si + 0);
-								waterTris.Add (si + 1);
-								waterTris.Add (si + 3);
+								waterTris.Add (wsi + 0);
+								waterTris.Add (wsi + 1);
+								waterTris.Add (wsi + 3);
 
-								waterTris.Add (si + 0);
-								waterTris.Add (si + 3);
-								waterTris.Add (si + 2);
+								waterTris.Add (wsi + 0);
+								waterTris.Add (wsi + 3);
+								waterTris.Add (wsi + 2);
 								break;
 							case 7:
 								// Inverted water top
@@ -204,13 +205,13 @@ public static class ChunkMeshBuilder {
 								waterUvs.Add (new Vector2 (a.UV_BL.x + oneNth - mx, a.UV_BL.y + oneNth - mx));
 								waterUvs.Add (new Vector2 (a.UV_BL.x + mx, a.UV_BL.y + oneNth - mx));
 
-								waterTris.Add (si + 0);
-								waterTris.Add (si + 2);
-								waterTris.Add (si + 1);
+								waterTris.Add (wsi + 0);
+								waterTris.Add (wsi + 2);
+								waterTris.Add (wsi + 1);
 
-								waterTris.Add (si + 2);
-								waterTris.Add (si + 3);
-								waterTris.Add (si + 1);
+								waterTris.Add (wsi + 2);
+								waterTris.Add (wsi + 3);
+								waterTris.Add (wsi + 1);
 								break;
 							}
 						}

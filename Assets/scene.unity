@@ -597,6 +597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chunkMaterial: {fileID: 2100000, guid: 64b4197eff1ba0c4fb0261cc78be2818, type: 2}
+  waterMaterial: {fileID: 2100000, guid: b53adf66af1c86c45b9d4800e83de4a7, type: 2}
   seed: -1
 --- !u!1 &1663239092
 GameObject:
@@ -747,7 +748,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2146937408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalPosition: {x: 0, y: 150, z: 0}
   m_LocalScale: {x: 0.8, y: 1, z: 0.8}
   m_Children:
   - {fileID: 579655696}
@@ -813,3 +814,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   world: {fileID: 816275397}
   radius: 8
+  collisionRadius: 2

@@ -103,6 +103,7 @@
 Assets/Block.cs
 Assets/CharacterControls.cs
 Assets/Chunk.cs
+Assets/ChunkMeshBuilder.cs
 Assets/ChunkMeshObject.cs
 Assets/CoroutineObject.cs
 Assets/EditBlocks.cs

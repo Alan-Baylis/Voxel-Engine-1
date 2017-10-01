@@ -88,7 +88,7 @@ public class CoroutineObject : MonoBehaviour {
 		col.transform.parent = g.transform;
 
 		int iterator = 0;
-		int numPerFrame = 100;
+		int numPerFrame = 20;
 
 		for(int i = 0; i < centres.Count; i++) {
 
@@ -101,7 +101,7 @@ public class CoroutineObject : MonoBehaviour {
 
 			if (iterator >= numPerFrame) {
 				iterator = 0;
-				yield return new WaitForEndOfFrame ();
+				yield return null;
 			}
 		}
 
